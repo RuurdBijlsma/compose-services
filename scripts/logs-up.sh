@@ -5,4 +5,5 @@ docker compose \
 	-f stacks/media/compose.yml \
 	--project-directory files \
 	--env-file .env \
-	up -d
+	up
+
