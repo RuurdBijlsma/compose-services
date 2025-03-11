@@ -1,0 +1,5 @@
+stacks/monitoring/portainer-data
+stacks/proxy/data
+stacks/proxy/letsencrypt
+.env
+stacks/media/config

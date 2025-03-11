@@ -1,0 +1,3 @@
+[submodule "submodules/ruurd-photos"]
+	path = submodules/ruurd-photos
+	url = https://github.com/ruurdbijlsma/photos-deployment.git

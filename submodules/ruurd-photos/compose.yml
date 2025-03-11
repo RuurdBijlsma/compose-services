@@ -1,0 +1,83 @@
+services:
+  frontend:
+    build:
+      context: "https://github.com/RuurdBijlsma/photos-frontend.git"
+      dockerfile: "Dockerfile"
+      args:
+        - BACKEND_HOST=backend:7000
+    restart: unless-stopped
+    ports:
+      - "9475:80"
+    networks:
+      - app_network
+    depends_on:
+      backend:
+        condition: service_healthy
+    volumes:
+      - thumbnail_cache:/var/cache/nginx
+      - thumbnails:/thumbnails
+
+  backend:
+    build:
+      context: "https://github.com/RuurdBijlsma/photos-backend.git"
+      dockerfile: "Dockerfile"
+    command: [ "start", "-e", "production" ]
+    environment:
+      PROCESSING_API_URL: "http://processing:9000"
+      THUMBNAILS_DIR: "/thumbnails"
+      DATABASE_URL: "postgres://loco:loco@postgres:5432/photos-backend_production"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      processing:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - app_network
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -f http://localhost:7000/_health || exit 1" ]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - thumbnails:/thumbnails
+
+  processing:
+    build:
+      context: "https://github.com/RuurdBijlsma/photos-processing.git"
+      dockerfile: "Dockerfile"
+    command: [ "--port", "9000" ]
+    restart: unless-stopped
+    networks:
+      - app_network
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -f http://localhost:9000/health || exit 1" ]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  postgres:
+    image: pgvector/pgvector:pg17
+    environment:
+      POSTGRES_USER: loco
+      POSTGRES_PASSWORD: loco
+      POSTGRES_DB: photos-backend_production
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    restart: unless-stopped
+    networks:
+      - app_network
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U loco -d photos-backend_production" ]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  pgdata:
+  thumbnail_cache:  # For NGINX proxy cache
+  thumbnails:  # For thumbnail static files
+
+networks:
+  app_network:
+    driver: bridge
