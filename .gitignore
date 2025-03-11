@@ -4,3 +4,5 @@ stacks/proxy/data
 stacks/monitoring/letsencrypt
 .env
 stacks/media/config
+stacks/monitoring/data
+stacks/monitoring/config
