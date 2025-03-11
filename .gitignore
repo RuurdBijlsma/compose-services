@@ -1,5 +1,6 @@
 stacks/monitoring/portainer-data
-stacks/proxy/data
 stacks/proxy/letsencrypt
+stacks/proxy/data
+stacks/monitoring/letsencrypt
 .env
 stacks/media/config

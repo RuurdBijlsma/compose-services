@@ -2,6 +2,7 @@
 
 ## DNS Config
 
+* Make sure api access is enabled for your domain
 * Make `*.domain.tld` point to your public ip
 
 ## Router config
