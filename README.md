@@ -26,6 +26,10 @@
     * also add host for anything else that has to be accessible
 7. visit all other sites to configure them before making them public\
 
+## Host name - Port
+
+When setting up hosts in node proxy manager, this info is useful.
+
 | hostname        | port  |
 |-----------------|-------|
 | plex            | 32400 |
