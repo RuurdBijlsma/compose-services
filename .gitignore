@@ -8,3 +8,4 @@ stacks/monitoring/letsencrypt
 stacks/media/config
 stacks/monitoring/data
 stacks/monitoring/config
+.idea
