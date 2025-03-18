@@ -41,4 +41,5 @@ When setting up hosts in node proxy manager, this info is useful.
 | uptime-kuma     | 3001  |
 | portainer       | 9000  |
 | netdata         | 19999 |
-
+| filebrowser     | 8080  |
+| vault           | 80    |

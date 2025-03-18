@@ -1,8 +1,11 @@
+# down.sh
 #!/bin/bash
+set -e
+
+COMPOSE_FILES=$(find stacks -mindepth 2 -maxdepth 2 -name "compose.yml" | sort | xargs -I {} echo -f {})
+
 docker compose \
-	-f stacks/monitoring/compose.yml \
-	-f stacks/proxy/compose.yml \
-	-f stacks/media/compose.yml \
-	--project-directory files \
-	--env-file .env \
-	down
+    $COMPOSE_FILES \
+    --project-directory files \
+    --env-file .env \
+    down

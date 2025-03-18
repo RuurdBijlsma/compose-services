@@ -1,0 +1,22 @@
+services:
+  filebrowser:
+    container_name: filebrowser
+    image: hurlenko/filebrowser
+    user: "${PUID}:${PGID}"
+    ports:
+      - 6931:8080
+    volumes:
+      - ./fb_data_dir:/data
+      - ./fb_config_dir:/config
+    environment:
+      - FB_BASEURL=/filebrowser
+    restart: unless-stopped
+    networks:
+      - proxy-net
+      - default
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+
+networks:
+  proxy-net:
+    external: true
