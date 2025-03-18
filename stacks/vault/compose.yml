@@ -4,7 +4,7 @@ services:
     image: vaultwarden/server:latest
     restart: unless-stopped
     volumes:
-      - ./vw-data:/data
+      - ./vaultwarden/data:/data
     environment:
 #      - ADMIN_TOKEN=${VAULTWARDEN_TOKEN} # Only enable to create first user
       - SIGNUPS_ALLOWED=false # Disable public signups

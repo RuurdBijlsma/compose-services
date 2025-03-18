@@ -2,17 +2,13 @@
 
 ### Backup Process
 The server is configured to perform weekly backups of all critical data, excluding media files (e.g., Plex media, downloads). The backup process includes:
-1. **Configuration Files**: The entire `ruurd-server-config` repository is backed up.
-2. **Docker Volumes**: All Docker named volumes are backed up as compressed tarballs.
-3. **HDD Data**: Files stored in `/mnt/hdd` are backed up, excluding the `media` and `downloads` directories.
-
-#### Backup Schedule
-- Backups run weekly on Sundays at 3 AM via a cron job.
-- Backups are stored in `$BACKUP_DIR` (default: `/mnt/backup`).
-- Old backups are automatically deleted after `$BACKUP_RETENTION_DAYS` (default: 28 days).
+1. **SSD Data**: Configuration files stored in `$SSD_PATH` (default: `~/server-files`) are backed up.
+2. **HDD Data**: Files stored in `$HDD_PATH` (default: `/mnt/hdd`) are backed up, excluding the `media` and `downloads` directories.
 
 #### Customization
 You can configure the backup process by editing the following variables in `.env`:
+- `SSD_PATH`: The directory containing configuration files (e.g., `~/server-files`).
+- `HDD_PATH`: The directory containing media and downloads (e.g., `/mnt/hdd`).
 - `BACKUP_DIR`: The directory where backups are stored (e.g., `/mnt/backup`).
 - `BACKUP_RETENTION_DAYS`: The number of days to keep backups (e.g., `28`).
 - `BACKUP_CHECK_MOUNT`: Set to `false` to skip the check for a mounted backup drive.
@@ -21,36 +17,56 @@ You can configure the backup process by editing the following variables in `.env
 
 ### Restore Process
 
-#### 1. Restore Configuration Files
-Copy the `ruurd-server-config` directory from the backup to your home directory:
-```bash
-rsync -av /path/to/backup/ruurd-server-config/ ~/ruurd-server-config/
-```
-2. Restore Docker Volumes
+#### 1. Restore SSD Data
+Copy the SSD data from the backup to its original location:
+``bash
+rsync -av /mnt/backup/ssd/ ~/server-files/
+``
 
-For each Docker volume in the backup:
-
-1. Create the volume:
-```
-    docker volume create <volume_name>
-```
-
-2. Restore the volume from the backup:
-```
-    docker run --rm -v <volume_name>:/volume -v /path/to/backup/volumes/<volume_name>.tar.gz:/backup.tar.gz alpine \
-        sh -c "tar -xzf /backup.tar.gz -C /volume"
-```
- 3. Restore HDD Data
-Use `rsync`:
-```
-rsync -av /path/to/backup/hdd/ /mnt/hdd/
-```
+#### 2. Restore HDD Data
+Use `rsync` to restore the HDD data from the backup:
+``bash
+rsync -av /mnt/backup/hdd/ /mnt/hdd/
+``
 
 ---
 
-### How to Use
-1. Copy the `.env` variables into your `.env` file.
-2. Copy the updated `backup.sh` script into `~/ruurd-server-config/scripts/backup.sh`.
-3. Copy the README section into your `README.md`.
+### Setting Up the Cron Job
+To schedule the backup script to run weekly, follow these steps:
 
-This setup now includes the `BACKUP_CHECK_MOUNT` environment variable for flexibility and provides clear instructions for backup and restore processes.
+1. Open the crontab editor:
+   ``bash
+   crontab -e
+   ``
+
+2. Add the following line to run the backup script every Sunday at 3 AM:
+   ``bash
+   0 3 * * 0 /home/ruurd/ruurd-server-config/scripts/backup.sh
+   ``
+
+3. Save and exit the editor. The cron job is now active.
+
+#### Verify the Cron Job
+To verify that the cron job has been set up correctly:
+1. List the current cron jobs:
+   ``bash
+   crontab -l
+   ``
+2. Ensure the backup job appears in the list.
+
+---
+
+### Testing Backups
+To ensure your backups are working correctly:
+1. Run the backup script manually:
+   ``bash
+   ~/ruurd-server-config/scripts/backup.sh
+   ``
+2. Verify the backup files are created in `$BACKUP_DIR`.
+3. Test restoring a small subset of data (e.g., a few files from `~/server-files` or `/mnt/hdd`).
+
+---
+
+### Notes
+- **Media Files**: Media files (e.g., Plex media, downloads) are excluded from backups due to their size. Ensure these are backed up separately if needed.
+- **Skip Mount Check**: If `BACKUP_CHECK_MOUNT` is set to `false`, the script will not check if the backup drive is mounted. Use this if backups are stored locally or on a network share that doesn't require mounting.

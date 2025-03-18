@@ -17,24 +17,15 @@ if [ "$CHECK_MOUNT" = "true" ] && ! mountpoint -q "$BACKUP_DIR"; then
 fi
 
 # Create backup directories
-mkdir -p "$BACKUP_ROOT"/{volumes,hdd}
+mkdir -p "$BACKUP_ROOT"
 
-# 1. Backup the git repository (configs and compose files)
-echo "Backing up git repository..."
-rsync -av --delete ~/ruurd-server-config/ "$BACKUP_ROOT/ruurd-server-config/"
+# 1. Backup SSD data (configuration files)
+echo "Backing up SSD data from $SSD_PATH..."
+rsync -av --delete "$SSD_PATH/" "$BACKUP_ROOT/ssd/"
 
-# 2. Backup Docker volumes (excluding media-related bind mounts)
-echo "Backing up Docker volumes..."
-VOLUMES=$(docker volume ls -q)
-for VOLUME in $VOLUMES; do
-    echo "Backing up volume: $VOLUME"
-    docker run --rm -v "$VOLUME":/volume -v "$BACKUP_ROOT/volumes":/backup alpine \
-        tar -czf "/backup/$VOLUME.tar.gz" -C /volume .
-done
-
-# 3. Backup HDD data (excluding media and downloads)
-echo "Backing up HDD data..."
-rsync -av --delete --exclude='media/' --exclude='downloads/' /mnt/hdd/ "$BACKUP_ROOT/hdd/"
+# 2. Backup HDD data (excluding media and downloads)
+echo "Backing up HDD data from $HDD_PATH..."
+rsync -av --delete --exclude='media/' --exclude='downloads/' "$HDD_PATH/" "$BACKUP_ROOT/hdd/"
 
 # Clean up old backups
 echo "Cleaning up backups older than $RETENTION_DAYS days..."
