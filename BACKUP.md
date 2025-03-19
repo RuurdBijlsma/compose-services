@@ -49,7 +49,7 @@ To schedule the backup script to run weekly, follow these steps:
 
 2. Add the following line to run the backup script every Sunday at 3 AM:
    ``bash
-   0 3 * * 0 /home/ruurd/ruurd-server-config/scripts/backup.sh
+   0 3 * * 0 /home/ruurd/compose-services/scripts/backup.sh
    ``
 
 3. Save and exit the editor. The cron job is now active.
@@ -72,7 +72,7 @@ To ensure your backups are working correctly:
 
 1. Run the backup script manually:
    ``bash
-   ~/ruurd-server-config/scripts/backup.sh
+   ~/compose-services/scripts/backup.sh
    ``
 2. Verify the backup files are created in `$BACKUP_DIR`.
 3. Test restoring a small subset of data (e.g., a few files from `~/server-files` or `/mnt/hdd`).
