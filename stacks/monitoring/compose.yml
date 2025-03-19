@@ -3,8 +3,6 @@ services:
     image: netdata/netdata:latest
     container_name: netdata
     restart: unless-stopped
-    ports:
-      - "19999:19999"
     cap_add:
       - SYS_PTRACE
     security_opt:
@@ -16,15 +14,14 @@ services:
       - /proc:/host/proc:ro
       - /sys:/host/sys:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
-      - netdata-config:/etc/netdata
-      - netdata-lib:/var/lib/netdata
-      - netdata-cache:/var/cache/netdata
+      - ${SSD_PATH}/netdata/config:/etc/netdata
+      - ${SSD_PATH}/netdata/lib:/var/lib/netdata
+      - ${SSD_PATH}/netdata/cache:/var/cache/netdata
       - /etc/passwd:/host/etc/passwd:ro
       - /etc/group:/host/etc/group:ro
       - /etc/os-release:/host/etc/os-release:ro
     networks:
       - proxy-net
-      - default
 
   watchtower:
     image: containrrr/watchtower
@@ -34,7 +31,6 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     networks:
       - proxy-net
-      - default
 
   portainer:
     image: portainer/portainer-ce:latest
@@ -42,34 +38,19 @@ services:
     restart: unless-stopped
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - ./portainer-data:/data
-    ports:
-      - 9443:9443
-      - 9000:9000
-      - 8000:8000
+      - ${SSD_PATH}/portainer:/data
     networks:
       - proxy-net
-      - default
 
   uptime-kuma:
     image: louislam/uptime-kuma:1
     container_name: uptime-kuma
     restart: always
-    ports:
-      - "3001:3001"
     volumes:
-      - uptime-kuma:/app/data
+      - ${SSD_PATH}/uptime-kuma:/app/data
     networks:
       - proxy-net
-      - default
-
-volumes:
-  netdata-config:
-  netdata-lib:
-  netdata-cache:
-  uptime-kuma:
 
 networks:
   proxy-net:
     external: true
-  default:

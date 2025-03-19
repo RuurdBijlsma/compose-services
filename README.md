@@ -16,15 +16,21 @@
 2. copy `stacks/media/.env.template` to `stacks/media/.env`
 3. Fill in the right values, for `PLEX_ADVERTISE_IP`, fill your-public-ip:32400
 4. Place wireguard `.conf` from Proton/your vpn at `stacks/media/config/qbittorrent/config/wireguard/anyname.conf`
-5. `./scripts/deploy.sh`
+4. `docker network create proxy-net`
+5. `./scripts/up.sh`
 6. Visit server-ip:81 to configure nginx proxy manager
     * create user
     * add letsencrypt wildcard certificate for *.yourdomain.tld with DNS challenge (api key)
-    * dns challenge may time out, this is fake, certbot is still going. Wait a while then try to add it again, it should
+    * dns challenge may time out, this is fake, certbot is still going (TAKES LONG TIME). Wait a while then try to add it again, it should
       succeed.
     * add host -> `proxy-manager`, port=81, http, ssl -> choose wildcard cert & enable http2 & force ssl
     * also add host for anything else that has to be accessible
 7. visit all other sites to configure them before making them public\
+8. Configure qbittorrent:
+	* Add to ssd_path/qbittorrent/config/qBittorrent/qBittorrent.conf:
+	* WebUI\Password_PBKDF2="@ByteArray(ARQ77eY1NUZaQsuDHbIMCA==:0WMRkYTUWVT9wVvdDtHAjU9b3b7uB8NR1Gur2hmQCvCDpm39Q+PsJRJPaCU51dEiz+dTzh8qbPsL8WkFljQYFQ==)"
+	* log in to webui with: "admin" "adminadmin"
+	* change pw
 
 ## Host name - Port
 

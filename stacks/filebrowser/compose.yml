@@ -6,8 +6,8 @@ services:
     ports:
       - 6931:8080
     volumes:
-      - ./filebrowser/data:/data
-      - ./filebrowser/config:/config
+      - ${SSD_PATH}/filebrowser/data:/data
+      - ${SSD_PATH}/filebrowser/config:/config
     environment:
       - FB_BASEURL=/filebrowser
     restart: unless-stopped

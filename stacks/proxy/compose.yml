@@ -8,8 +8,8 @@ services:
       - '80:80'    # Public HTTP
       - '443:443'  # Public HTTPS
     volumes:
-      - ./npm/data:/data
-      - ./npm/letsencrypt:/etc/letsencrypt
+      - ${SSD_PATH}/npm/data:/data
+      - ${SSD_PATH}/npm/letsencrypt:/etc/letsencrypt
     networks:
       - proxy-net
     labels:

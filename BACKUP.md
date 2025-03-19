@@ -19,15 +19,15 @@ You can configure the backup process by editing the following variables in `.env
 
 #### 1. Restore SSD Data
 Copy the SSD data from the backup to its original location:
-``bash
+```bash
 rsync -av /mnt/backup/ssd/ ~/server-files/
-``
+```
 
 #### 2. Restore HDD Data
 Use `rsync` to restore the HDD data from the backup:
-``bash
+```bash
 rsync -av /mnt/backup/hdd/ /mnt/hdd/
-``
+```
 
 ---
 
@@ -35,23 +35,23 @@ rsync -av /mnt/backup/hdd/ /mnt/hdd/
 To schedule the backup script to run weekly, follow these steps:
 
 1. Open the crontab editor:
-   ``bash
+   ```bash
    crontab -e
-   ``
+   ```
 
 2. Add the following line to run the backup script every Sunday at 3 AM:
-   ``bash
-   0 3 * * 0 /home/ruurd/ruurd-server-config/scripts/backup.sh
-   ``
+   ```bash
+   0 3 * * 0 /home/ruurd/compose-services/scripts/backup.sh
+   ```
 
 3. Save and exit the editor. The cron job is now active.
 
 #### Verify the Cron Job
 To verify that the cron job has been set up correctly:
 1. List the current cron jobs:
-   ``bash
+   ```bash
    crontab -l
-   ``
+   ```
 2. Ensure the backup job appears in the list.
 
 ---
@@ -59,9 +59,9 @@ To verify that the cron job has been set up correctly:
 ### Testing Backups
 To ensure your backups are working correctly:
 1. Run the backup script manually:
-   ``bash
-   ~/ruurd-server-config/scripts/backup.sh
-   ``
+   ```bash
+   ~/compose-services/scripts/backup.sh
+   ```
 2. Verify the backup files are created in `$BACKUP_DIR`.
 3. Test restoring a small subset of data (e.g., a few files from `~/server-files` or `/mnt/hdd`).
 

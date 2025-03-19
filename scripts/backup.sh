@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Load environment variables
-source ~/ruurd-server-config/.env
+source ~/compose-services/.env
 
 # Backup configuration
 BACKUP_DIR="${BACKUP_DIR:-/mnt/backup}"  # Default to /mnt/backup if not set

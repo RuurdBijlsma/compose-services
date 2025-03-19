@@ -3,9 +3,6 @@ services:
     container_name: qbittorrent-vpn
     image: binhex/arch-qbittorrentvpn:latest
     restart: unless-stopped
-    ports:
-      - 8080:8080
-      - 8118:8118
     privileged: true
     cap_add:
       - NET_ADMIN
@@ -29,37 +26,36 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ${SSD_PATH}/qbittorrent:/config:rw
-      - ${HDD_PATH}/downloads:/downloads:rw
+      - ${HDD_PATH}/htpc/downloads:/downloads:rw
 
-  plex:
-    image: linuxserver/plex
-    container_name: plex
+  jellyfin:
+    image: jellyfin/jellyfin:latest
+    container_name: jellyfin
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
-      - PLEX_CLAIM=${PLEX_CLAIM}
       - TZ=${TZ}
-      - VERSION=docker
-      - ADVERTISE_IP=${PLEX_ADVERTISE_IP}
-
+      - UMASK=022
+      - JELLYFIN_PublishedServerUrl=${JELLYFIN_URL}
+      - NVIDIA_DRIVER_CAPABILITIES=compute,video,utility
+      - NVIDIA_VISIBLE_DEVICES=all
     volumes:
-      - ${SSD_PATH}/plex:/config
-      - ${HDD_PATH}/media:/media
+      - ${SSD_PATH}/jellyfin:/config
+      - ${HDD_PATH}/htpc/media:/media
+      - ${HDD_PATH}/photos:/photos
+      - /dev/nvidia0:/dev/nvidia0
+      - /dev/nvidiactl:/dev/nvidiactl
+      - /dev/nvidia-uvm:/dev/nvidia-uvm
     ports:
-      - "32400:32400"
-      - "1900:1900"
-      - "3005:3005"
-      - "5353:5353"
-      - "8324:8324"
-      - "32410:32410"
-      - "32412:32412"
-      - "32413:32413"
-      - "32414:32414"
-      - "32469:32469"
+      - "8096:8096"  # Web UI
+      - "8920:8920"  # HTTPS
+      - "1900:1900/udp"  # DLNA
+      - "7359:7359/udp"  # Client discovery
     restart: unless-stopped
     networks:
       - proxy-net
       - default
+    runtime: nvidia
 
   prowlarr:
     image: linuxserver/prowlarr
@@ -70,12 +66,9 @@ services:
       - TZ=${TZ}
     volumes:
       - ${SSD_PATH}/prowlarr:/config
-    ports:
-      - "9696:9696"
     restart: unless-stopped
     networks:
       - proxy-net
-      - default
 
   sonarr:
     image: linuxserver/sonarr
@@ -86,14 +79,11 @@ services:
       - TZ=${TZ}
     volumes:
       - ${SSD_PATH}/sonarr:/config
-      - ${HDD_PATH}/media:/media
-      - ${HDD_PATH}/downloads:/downloads
-    ports:
-      - "8989:8989"
+      - ${HDD_PATH}/htpc/media:/media
+      - ${HDD_PATH}/htpc/downloads:/downloads
     restart: unless-stopped
     networks:
       - proxy-net
-      - default
 
   radarr:
     image: linuxserver/radarr
@@ -104,14 +94,11 @@ services:
       - TZ=${TZ}
     volumes:
       - ${SSD_PATH}/radarr:/config
-      - ${HDD_PATH}/media:/media
-      - ${HDD_PATH}/downloads:/downloads
-    ports:
-      - "7878:7878"
+      - ${HDD_PATH}/htpc/media:/media
+      - ${HDD_PATH}/htpc/downloads:/downloads
     restart: unless-stopped
     networks:
       - proxy-net
-      - default
 
   overseerr:
     image: linuxserver/overseerr
@@ -122,12 +109,9 @@ services:
       - TZ=${TZ}
     volumes:
       - ${SSD_PATH}/overseerr:/config
-    ports:
-      - 5055:5055
     restart: unless-stopped
     networks:
       - proxy-net
-      - default
 
 networks:
   proxy-net:
