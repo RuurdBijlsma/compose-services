@@ -1,0 +1,42 @@
+services:
+  odoo:
+    image: odoo:18.0
+    container_name: odoo
+    restart: unless-stopped
+    depends_on:
+      - db
+    ports:
+      - "10017:8069"
+    volumes:
+      - odoo-web-data:/var/lib/odoo
+    environment:
+      - HOST=odoo-db
+      - USER=odoo
+      - PASSWORD=${ODOO_DB_PASSWORD}
+      - PGPASSWORD=${ODOO_DB_PASSWORD}
+    networks:
+      - proxy-net
+      - default
+
+  db:
+    image: postgres:15
+    container_name: odoo-db
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=odoo
+      - POSTGRES_PASSWORD=${ODOO_DB_PASSWORD}
+      - POSTGRES_DB=postgres
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    volumes:
+      - odoo-db-data:/var/lib/postgresql/data/pgdata
+    networks:
+      - default
+
+volumes:
+  odoo-web-data:
+  odoo-db-data:
+
+networks:
+  proxy-net:
+    external: true
+  default:

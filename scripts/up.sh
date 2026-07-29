@@ -9,4 +9,4 @@ docker compose \
     $COMPOSE_FILES \
     --project-directory files \
     --env-file .env \
-    up -d
+    up -d --remove-orphans

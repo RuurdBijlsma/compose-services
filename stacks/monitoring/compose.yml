@@ -1,28 +1,4 @@
 services:
-  netdata:
-    image: netdata/netdata:latest
-    container_name: netdata
-    restart: unless-stopped
-    cap_add:
-      - SYS_PTRACE
-    security_opt:
-      - apparmor:unconfined
-    pid: host
-    environment:
-      - NETDATA_DISABLE_TELEMETRY=1
-    volumes:
-      - /proc:/host/proc:ro
-      - /sys:/host/sys:ro
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-      - ${SSD_PATH}/netdata/config:/etc/netdata
-      - ${SSD_PATH}/netdata/lib:/var/lib/netdata
-      - ${SSD_PATH}/netdata/cache:/var/cache/netdata
-      - /etc/passwd:/host/etc/passwd:ro
-      - /etc/group:/host/etc/group:ro
-      - /etc/os-release:/host/etc/os-release:ro
-    networks:
-      - proxy-net
-
   watchtower:
     image: containrrr/watchtower
     container_name: watchtower
