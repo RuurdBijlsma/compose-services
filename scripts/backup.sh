@@ -1,7 +1,8 @@
 #!/bin/bash
 
 # Load environment variables
-source ~/compose-services/.env
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$SCRIPT_DIR/../.env"
 
 # Backup configuration
 BACKUP_DIR="${BACKUP_DIR:-/mnt/backup}"  # Default to /mnt/backup if not set

@@ -13,10 +13,10 @@
 ## Setup
 
 1. `./scripts/install-docker.sh`
-2. copy `stacks/media/.env.template` to `stacks/media/.env`
+2. copy `stacks/media/example.env` to `stacks/media/.env`
 3. Place wireguard `.conf` from Proton/your vpn at `stacks/media/config/qbittorrent/config/wireguard/anyname.conf`
-4. `./scripts/up.sh`
-5. `docker network create proxy-net`
+4. `docker network create proxy-net`
+5. `./scripts/up.sh`
 6. Visit server-ip:81 to configure nginx proxy manager
     * create user
     * add letsencrypt wildcard certificate for *.yourdomain.tld with DNS challenge (api key)
@@ -46,7 +46,6 @@ When setting up hosts in node proxy manager, this info is useful.
 | overseerr       | request | 5055  |
 | uptime-kuma     | uptime  | 3001  |
 | portainer       |         | 9000  |
-| netdata         |         | 19999 |
 | filebrowser     | drive   | 8080  |
 | vaultwarden     | vault   | 80    |
 | photos          | photos  | 9475  |

@@ -1,7 +1,8 @@
 #!/bin/bash
 
 # Load environment variables
-source ~/compose-services/.env
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$SCRIPT_DIR/../.env"
 
 # Usage check: require a date in YYYY-MM-DD format as the first argument
 if [ -z "$1" ]; then
