@@ -1,4 +1,3 @@
-# down.sh
 #!/bin/bash
 set -e
 

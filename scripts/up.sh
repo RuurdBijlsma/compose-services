@@ -1,6 +1,7 @@
-# up.sh
 #!/bin/bash
 set -e
+
+docker network create proxy-net 2>/dev/null || true
 
 # Get all compose files
 COMPOSE_FILES=$(find stacks -mindepth 2 -maxdepth 2 -name "compose.yml" | sort | xargs -I {} echo -f {})

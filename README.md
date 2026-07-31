@@ -13,7 +13,7 @@
 ## Setup
 
 1. `./scripts/install-docker.sh`
-2. copy `stacks/media/example.env` to `stacks/media/.env`
+2. copy `example.env` to `.env`
 3. Place wireguard `.conf` from Proton/your vpn at `stacks/media/config/qbittorrent/config/wireguard/anyname.conf`
 4. `docker network create proxy-net`
 5. `./scripts/up.sh`

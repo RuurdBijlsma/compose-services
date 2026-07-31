@@ -35,6 +35,9 @@ services:
     volumes:
       - ${MEDIA_LOCATION}:/media
       - ${APP_DATA_LOCATION:-app_data}:/app_data
+    networks:
+      - proxy-net
+      - default
 
   scaler:
     image: ghcr.io/ruurdbijlsma/photos-server:latest
