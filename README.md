@@ -27,7 +27,8 @@
 7. visit all other sites to configure them before making them public\
 8. Configure qbittorrent:
     * Add to ssd_path/qbittorrent/config/qBittorrent/qBittorrent.conf:
-    * WebUI\Password_PBKDF2="@ByteArray(ARQ77eY1NUZaQsuDHbIMCA==:0WMRkYTUWVT9wVvdDtHAjU9b3b7uB8NR1Gur2hmQCvCDpm39Q+PsJRJPaCU51dEiz+dTzh8qbPsL8WkFljQYFQ==)"
+    * WebUI\Password_PBKDF2="@ByteArray(ARQ77eY1NUZaQsuDHbIMCA==:
+      0WMRkYTUWVT9wVvdDtHAjU9b3b7uB8NR1Gur2hmQCvCDpm39Q+PsJRJPaCU51dEiz+dTzh8qbPsL8WkFljQYFQ==)"
     * log in to webui with: "admin" "adminadmin"
     * change pw
 
@@ -48,3 +49,4 @@ When setting up hosts in node proxy manager, this info is useful.
 | netdata         |         | 19999 |
 | filebrowser     | drive   | 8080  |
 | vaultwarden     | vault   | 80    |
+| photos          | photos  | 9475  |
