@@ -43,11 +43,11 @@ services:
       - proxy-net
       - default
     healthcheck:
-      test: [ "CMD-SHELL", "curl -f http://localhost:5272/api/health || exit 1" ]
+      test: [ "CMD-SHELL", "curl -f http://127.0.0.1:5272/api/health || exit 1" ]
       interval: 15s
       timeout: 5s
-      retries: 3
-      start_period: 60s
+      retries: 5
+      start_period: 120s
 
   scaler:
     <<: *backend-common
