@@ -27,7 +27,7 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ${SSD_PATH}/qbittorrent:/config:rw
-      - ${HDD_PATH}/htpc:/data:rw
+      - ${HDD_PATH}/htpc:/htpc:rw
 
   jellyfin:
     image: jellyfin/jellyfin:latest
@@ -40,7 +40,7 @@ services:
       - JELLYFIN_PublishedServerUrl=${JELLYFIN_URL}
     volumes:
       - ${SSD_PATH}/jellyfin:/config
-      - ${HDD_PATH}/htpc/media:/media
+      - ${HDD_PATH}/htpc:/htpc
       - ${HDD_PATH}/photos:/photos
     ports:
       - "8096:8096"  # Web UI
@@ -75,7 +75,7 @@ services:
       - TZ=${TZ}
     volumes:
       - ${SSD_PATH}/sonarr:/config
-      - ${HDD_PATH}/htpc:/data
+      - ${HDD_PATH}/htpc:/htpc
     restart: unless-stopped
     networks:
       - proxy-net
@@ -89,7 +89,7 @@ services:
       - TZ=${TZ}
     volumes:
       - ${SSD_PATH}/radarr:/config
-      - ${HDD_PATH}/htpc:/data
+      - ${HDD_PATH}/htpc:/htpc
     restart: unless-stopped
     networks:
       - proxy-net
