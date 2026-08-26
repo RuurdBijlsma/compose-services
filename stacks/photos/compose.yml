@@ -34,6 +34,10 @@ services:
     volumes:
       - ${MEDIA_LOCATION}:/media
       - ${APP_DATA_LOCATION:-photos_app_data}:/app_data
+    deploy:
+      resources:
+        limits:
+          cpus: '5.0'
     healthcheck:
       test: [ "CMD-SHELL", "curl -f http://localhost:5272/api/health || exit 1" ]
       interval: 15s
