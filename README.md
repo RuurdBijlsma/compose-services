@@ -34,18 +34,19 @@
 
 ## Host name - Port
 
-When setting up hosts in node proxy manager, this info is useful.
+When setting up hosts in nginx proxy manager, this info is useful.
 
-| hostname        | domain  | port  |
-|-----------------|:--------|-------|
-| jellyfin        | jelly   | 8096  |
-| qbittorrent-vpn | torrent | 8080  |
-| prowlarr        |         | 9696  |
-| sonarr          |         | 8989  |
-| radarr          |         | 7878  |
-| overseerr       | request | 5055  |
-| uptime-kuma     | uptime  | 3001  |
-| portainer       |         | 9000  |
-| filebrowser     | drive   | 8080  |
-| vaultwarden     | vault   | 80    |
-| photos          | photos  | 9475  |
+| hostname        | domain  | port |
+|-----------------|:--------|------|
+| jellyfin        | jelly   | 8096 |
+| qbittorrent-vpn | torrent | 8080 |
+| prowlarr        |         | 9696 |
+| sonarr          |         | 8989 |
+| radarr          |         | 7878 |
+| overseerr       | request | 5055 |
+| uptime-kuma     | uptime  | 3001 |
+| portainer       |         | 9000 |
+| filebrowser     | drive   | 8080 |
+| vaultwarden     | vault   | 80   |
+| odoo            | odoo    | 8069 |
+| photos_web      | photos  | 9475 |
