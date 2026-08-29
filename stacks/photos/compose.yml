@@ -14,6 +14,8 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+    networks:
+      - default
 
   backend:
     image: ghcr.io/ruurdbijlsma/photos-server:latest
@@ -44,6 +46,8 @@ services:
       timeout: 5s
       retries: 3
       start_period: 60s
+    networks:
+      - default
 
   web:
     image: ghcr.io/ruurdbijlsma/photos-web:latest
@@ -56,7 +60,17 @@ services:
     depends_on:
       backend:
         condition: service_healthy
+    networks:
+      proxy-net:
+        aliases:
+          - photos
+      default:
 
 volumes:
   photos_pgdata:
   photos_app_data:
+
+networks:
+  proxy-net:
+    external: true
+  default:
