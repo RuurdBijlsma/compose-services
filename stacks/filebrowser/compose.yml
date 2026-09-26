@@ -1,19 +1,31 @@
 services:
-  filebrowser:
-    container_name: filebrowser
-    image: hurlenko/filebrowser
-    user: "${PUID}:${PGID}"
-    ports:
-      - 6931:8080
-    volumes:
-      - ${SSD_PATH}/filebrowser/data:/data
-      - ${SSD_PATH}/filebrowser/config:/config
-    environment:
-      - FB_BASEURL=/filebrowser
+  # drive.ruurd.dev
+  filebrowser-ruurd:
+    container_name: filebrowser-ruurd
+    image: gtstef/filebrowser:stable
     restart: unless-stopped
+    user: "${PUID}:${PGID}"
+    volumes:
+      - ${HDD_PATH}/drive/ruurd:/srv
+      - ${SSD_PATH}/filebrowser-ruurd/database.db:/database.db
+      - ${SSD_PATH}/filebrowser-ruurd/config.json:/config/settings.json
     networks:
       - proxy-net
-      - default
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+
+  # drive.bramercampers.nl
+  filebrowser-bramer:
+    container_name: filebrowser-bramer
+    image: gtstef/filebrowser:stable
+    restart: unless-stopped
+    user: "${PUID}:${PGID}"
+    volumes:
+      - ${HDD_PATH}/drive/bramer:/srv
+      - ${SSD_PATH}/filebrowser-bramer/database.db:/database.db
+      - ${SSD_PATH}/filebrowser-bramer/config.json:/config/settings.json
+    networks:
+      - proxy-net
     labels:
       - "com.centurylinklabs.watchtower.enable=true"
 
