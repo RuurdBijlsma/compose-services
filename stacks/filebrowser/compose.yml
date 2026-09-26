@@ -7,8 +7,7 @@ services:
     user: "${PUID}:${PGID}"
     volumes:
       - ${HDD_PATH}/drive/ruurd:/srv
-      - ${SSD_PATH}/filebrowser-ruurd/database.db:/database.db
-      - ${SSD_PATH}/filebrowser-ruurd/config.json:/config/settings.json
+      - ${SSD_PATH}/filebrowser-ruurd:/home/filebrowser/data
     networks:
       - proxy-net
     labels:
@@ -22,8 +21,7 @@ services:
     user: "${PUID}:${PGID}"
     volumes:
       - ${HDD_PATH}/drive/bramer:/srv
-      - ${SSD_PATH}/filebrowser-bramer/database.db:/database.db
-      - ${SSD_PATH}/filebrowser-bramer/config.json:/config/settings.json
+      - ${SSD_PATH}/filebrowser-bramer:/home/filebrowser/data
     networks:
       - proxy-net
     labels:
