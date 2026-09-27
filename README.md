@@ -13,19 +13,30 @@
 ## Setup
 
 1. `./scripts/install-docker.sh`
-2. copy `example.env` to `.env`
-3. Place wireguard `.conf` from Proton/your vpn at `stacks/media/config/qbittorrent/config/wireguard/anyname.conf`
-4. `docker network create proxy-net`
-5. `./scripts/up.sh`
-6. Visit server-ip:81 to configure nginx proxy manager
+2. **Configure HDD dependency for Docker:**
+   * Run `sudo systemctl edit docker`
+   * Add:
+     ```ini
+     [Unit]
+     RequiresMountsFor=/mnt/hdd
+     ```
+   * Apply changes:
+     ```bash
+     sudo systemctl daemon-reload && sudo systemctl restart docker
+     ```
+3. copy `example.env` to `.env`
+4. Place wireguard `.conf` from Proton/your vpn at `stacks/media/config/qbittorrent/config/wireguard/anyname.conf`
+5. `docker network create proxy-net`
+6. `./scripts/up.sh`
+7. Visit server-ip:81 to configure nginx proxy manager
     * create user
     * add letsencrypt wildcard certificate for *.yourdomain.tld with DNS challenge (api key)
     * dns challenge may time out, this is fake, certbot is still going. Wait a while then try to add it again, it should
       succeed.
     * add host -> `proxy-manager`, port=81, http, ssl -> choose wildcard cert & enable http2 & force ssl
     * also add host for anything else that has to be accessible
-7. visit all other sites to configure them before making them public\
-8. Configure qbittorrent:
+8. visit all other sites to configure them before making them public\
+9. Configure qbittorrent:
     * Add to ssd_path/qbittorrent/config/qBittorrent/qBittorrent.conf:
     * WebUI\Password_PBKDF2="@ByteArray(ARQ77eY1NUZaQsuDHbIMCA==:
       0WMRkYTUWVT9wVvdDtHAjU9b3b7uB8NR1Gur2hmQCvCDpm39Q+PsJRJPaCU51dEiz+dTzh8qbPsL8WkFljQYFQ==)"
