@@ -38,6 +38,8 @@ services:
       - TZ=${TZ}
       - UMASK=022
       - JELLYFIN_PublishedServerUrl=${JELLYFIN_URL}
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=all
     volumes:
       - ${SSD_PATH}/jellyfin:/config
       - ${HDD_PATH}/htpc:/htpc
