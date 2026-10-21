@@ -96,19 +96,6 @@ services:
     networks:
       - proxy-net
 
-  overseerr:
-    image: linuxserver/overseerr
-    container_name: overseerr
-    environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
-      - TZ=${TZ}
-    volumes:
-      - ${SSD_PATH}/overseerr:/config
-    restart: unless-stopped
-    networks:
-      - proxy-net
-
 networks:
   proxy-net:
     external: true

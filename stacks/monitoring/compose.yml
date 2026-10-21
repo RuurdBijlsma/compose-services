@@ -11,25 +11,6 @@ services:
     networks:
       - proxy-net
 
-  portainer:
-    image: portainer/portainer-ce:latest
-    container_name: portainer
-    restart: unless-stopped
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ${SSD_PATH}/portainer:/data
-    networks:
-      - proxy-net
-
-  uptime-kuma:
-    image: louislam/uptime-kuma:1
-    container_name: uptime-kuma
-    restart: always
-    volumes:
-      - ${SSD_PATH}/uptime-kuma:/app/data
-    networks:
-      - proxy-net
-
 networks:
   proxy-net:
     external: true

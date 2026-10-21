@@ -75,9 +75,6 @@ When setting up hosts in nginx proxy manager, this info is useful.
 | prowlarr        |         | 9696 |
 | sonarr          |         | 8989 |
 | radarr          |         | 7878 |
-| overseerr       | request | 5055 |
-| uptime-kuma     | uptime  | 3001 |
-| portainer       |         | 9000 |
 | filebrowser     | drive   | 8080 |
 | vaultwarden     | vault   | 80   |
 | odoo            | odoo    | 8069 |
