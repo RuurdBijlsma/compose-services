@@ -114,6 +114,11 @@ services:
     depends_on:
       - loki
       - database
+    networks:
+      proxy-net:
+        aliases:
+          - photos-grafana
+      default:
 
 volumes:
   photos_pgdata:
