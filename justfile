@@ -1,7 +1,7 @@
 set dotenv-load
 
 project := "main"
-compose_files := `find stacks -mindepth 2 -maxdepth 2 -name "compose.yml" | sort | xargs -I {} echo -f {}`
+compose_files := `find stacks -mindepth 2 -maxdepth 2 -name "compose.yml" | sort | sed 's/^/-f /' | tr '\n' ' '`
 
 # List available commands
 default:
