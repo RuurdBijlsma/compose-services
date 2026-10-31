@@ -59,6 +59,11 @@ services:
     depends_on:
       backend:
         condition: service_healthy
+    networks:
+      proxy-net:
+        aliases:
+          - photos
+      default:
 
   # Optional monitoring stack. Off by default:
   #   docker compose --profile monitoring up -d
