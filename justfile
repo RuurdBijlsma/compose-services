@@ -43,18 +43,9 @@ pull stack:
 ps:
     just dc ps
 
-# Follow logs (supports container name, stack name, service name, or all)
+# Follow logs across all containers or for a specific service (e.g. `just logs photos_backend`)
 logs *args:
-    #!/usr/bin/env bash
-    if [ $# -eq 0 ]; then
-        just dc logs -f
-    elif [ -d "stacks/$1" ]; then
-        docker compose -p {{project}} -f "stacks/$1/compose.yml" --project-directory . --env-file .env logs -f "${@:2}"
-    elif docker inspect "$1" >/dev/null 2>&1; then
-        docker logs -f "$@"
-    else
-        just dc logs -f "$@"
-    fi
+    just dc logs -f {{args}}
 
 # Execute the backup script
 backup:
