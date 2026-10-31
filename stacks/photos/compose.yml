@@ -65,8 +65,7 @@ services:
           - photos
       default:
 
-  # Optional monitoring stack. Off by default:
-  #   docker compose --profile monitoring up -d
+  # Optional monitoring stack enabled by COMPOSE_PROFILES=monitoring
   loki:
     image: ghcr.io/ruurdbijlsma/photos-loki:latest
     container_name: photos_loki
@@ -131,4 +130,3 @@ networks:
   proxy-net:
     external: true
   default:
-
