@@ -116,3 +116,9 @@ volumes:
   photos_loki_data:
   photos_alloy_data:
   photos_grafana_data:
+
+networks:
+  proxy-net:
+    external: true
+  default:
+
