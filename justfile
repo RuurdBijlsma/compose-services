@@ -43,10 +43,6 @@ pull stack:
 ps:
     just dc ps
 
-# Follow logs across all containers or for a specific service (e.g. `just logs photos_backend`)
-logs *args:
-    just dc logs -f {{args}}
-
 # Execute the backup script
 backup:
     @./scripts/backup.sh
